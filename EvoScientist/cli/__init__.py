@@ -63,10 +63,26 @@ def __getattr__(name: str):
     return value
 
 
+def _sanitize_proxy_env() -> None:
+    """Remove proxy env vars with schemes unsupported by httpx (e.g. socks://)."""
+    import os as _os
+
+    _UNSUPPORTED_SCHEMES = ("socks://", "socks4://")
+    for key in (
+        "http_proxy", "https_proxy", "HTTP_PROXY", "HTTPS_PROXY",
+        "all_proxy", "ALL_PROXY", "socks_proxy", "SOCKS_PROXY",
+    ):
+        val = _os.environ.get(key)
+        if val and any(val.strip().startswith(s) for s in _UNSUPPORTED_SCHEMES):
+            del _os.environ[key]
+
+
 def main():
     """CLI entry point."""
     import os
     import warnings
+
+    _sanitize_proxy_env()
 
     warnings.filterwarnings("ignore", message=".*not known to support tools.*")
     warnings.filterwarnings(
