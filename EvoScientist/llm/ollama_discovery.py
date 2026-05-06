@@ -27,7 +27,7 @@ def validate_ollama_connection(base_url: str) -> tuple[bool, str, list[str]]:
     try:
         import httpx
 
-        resp = httpx.get(f"{base_url.rstrip('/')}/api/tags", timeout=5)
+        resp = httpx.get(f"{base_url.rstrip('/')}/api/tags", timeout=5, trust_env=False)
         if resp.status_code == 200:
             data = resp.json()
             models = data.get("models", [])

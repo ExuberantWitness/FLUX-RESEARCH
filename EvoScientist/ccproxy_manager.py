@@ -170,7 +170,7 @@ def is_ccproxy_running(port: int) -> bool:
     import httpx
 
     try:
-        resp = httpx.get(f"http://127.0.0.1:{port}/health/live", timeout=2.0)
+        resp = httpx.get(f"http://127.0.0.1:{port}/health/live", timeout=2.0, trust_env=False)
         return resp.status_code == 200
     except (httpx.ConnectError, httpx.TimeoutException, OSError):
         return False

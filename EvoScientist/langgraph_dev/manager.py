@@ -125,7 +125,7 @@ def is_langgraph_dev_running(
     """
     url = base_url or _base_url(port)
     try:
-        return httpx.get(f"{url}/ok", timeout=1.0).status_code == 200
+        return httpx.get(f"{url}/ok", timeout=1.0, trust_env=False).status_code == 200
     except (httpx.TransportError, OSError):
         return False
 
