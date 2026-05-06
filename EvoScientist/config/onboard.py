@@ -777,7 +777,7 @@ def _step_provider(config: EvoScientistConfig) -> str:
             value="dashscope",
         ),
         Choice(
-            title="DeepSeek (DeepSeek-R1, DeepSeek-V3)",
+            title="DeepSeek (DeepSeek-V4, DeepSeek-R1, DeepSeek-V3)",
             value="deepseek",
         ),
         Choice(
